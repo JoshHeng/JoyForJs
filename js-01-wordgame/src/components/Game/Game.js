@@ -14,7 +14,7 @@ function Game() {
   const [guesses, setGuesses] = React.useState([]);
   
   const onGuess = (guess) => {
-    setGuesses(prev => [...prev, { id: Math.random(), guess }]);
+    setGuesses(prev => [...prev, guess ]);
   }
   
   return (
