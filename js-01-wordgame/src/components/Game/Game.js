@@ -7,12 +7,10 @@ import GuessResults from "../GuessResults";
 import {checkGuess} from "../../game-helpers";
 import Banner from "../Banner";
 
-// Pick a random word on every pageload.
-const answer = sample(WORDS);
-// To make debugging easier, we'll log the solution in the console.
-console.info({ answer });
-
 function Game() {
+    const [answer, setAnswer] = React.useState(() => sample(WORDS));
+    React.useEffect(() => console.info({ answer }), [answer]);
+    
     const [guesses, setGuesses] = React.useState([]);
   
     // 'play', 'win', 'lose'
@@ -43,6 +41,12 @@ function Game() {
         
         return keyStatusDict;
     }, [guesses]);
+    
+    const restartGame = () => {
+        setAnswer(sample(WORDS));
+        setGuesses([]);
+        setGameState('play');
+    }
   
   return (
       <div>
@@ -60,6 +64,10 @@ function Game() {
           )}
         <GuessResults guesses={guesses} />
         <GuessInput onGuess={onGuess} disabled={gameState !== 'play'} keyStatuses={keyStatuses} />
+          
+        <div className="restart-div">
+            <button type="button" onClick={restartGame} className="restart">Restart</button> 
+        </div>
       </div>
   )
 }
