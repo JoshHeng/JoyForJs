@@ -29,6 +29,20 @@ function Game() {
     
         setGuesses(prev => [...prev, guessAndResult]);
     }
+    
+    const keyStatuses = React.useMemo(() => {
+        const keyStatusDict = {};
+        
+        for (const guess of guesses) {
+            for (const char of guess) {
+                if (!keyStatusDict[char.letter] || char.status === 'correct') {
+                    keyStatusDict[char.letter] = char.status;
+                }
+            }
+        }
+        
+        return keyStatusDict;
+    }, [guesses]);
   
   return (
       <div>
@@ -45,7 +59,7 @@ function Game() {
               </Banner>
           )}
         <GuessResults guesses={guesses} />
-        <GuessInput onGuess={onGuess} disabled={gameState !== 'play'} />
+        <GuessInput onGuess={onGuess} disabled={gameState !== 'play'} keyStatuses={keyStatuses} />
       </div>
   )
 }
