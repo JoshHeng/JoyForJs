@@ -3,6 +3,16 @@ body {
   margin: 0;
 }
 
+body::before {
+  content: '';
+  position: fixed;
+  left: 0;
+  right: 0;
+  top: 60%;
+  bottom: 0;
+  background-color: hsl(195deg, 20%, 86%);
+}
+
 *,
 *:before,
 *:after {
